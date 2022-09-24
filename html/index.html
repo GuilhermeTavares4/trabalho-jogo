@@ -44,6 +44,7 @@
       let pontos = 0;
       let atk1 = []
       let i = 0
+      let pvelocidade
       if (window.innerWidth >= 600){
       personagem.style.left = "26vh";
       personagem.style.top = "27vh"
@@ -54,11 +55,12 @@
       paredeesq.style.width = "3.3vh";
       bordaextra.style.width = "62vh";
       bordaextra.style.height = "65vh";
-      projetil1width = 3; 
+      projetil1width = 3;
+      pvelocidade = 0.5
       }
       else{
       personagem.style.left = "18vh";
-      personagem.style.top = "19vh"
+      personagem.style.top = "18vh"
       personagem.style.width = "2vh";
       personagem.style.height = "2vh";
       bordas.style.width = "38vh";
@@ -67,11 +69,12 @@
       bordaextra.style.width = "43vh";
       bordaextra.style.height = "46vh";
       projetil1width = 2; 
+      pvelocidade = 0.4
       }
       //FUNÇAO DIREITA---------------------------------------------------------------------------------------
       function vaipradireita() {
         if (parseFloat(personagem.style.left) + parseFloat(personagem.style.width) < parseFloat(bordas.style.width) && vida > 0) {
-          personagem.style.left = parseFloat(personagem.style.left) + 0.5 + "vh";
+          personagem.style.left = parseFloat(personagem.style.left) + pvelocidade + "vh";
         }
         direita.addEventListener("mouseout",()=>{
           clearInterval(intervaldireita)
@@ -80,7 +83,7 @@
       //FUNÇAO ESQUERDA---------------------------------------------------------------------------------------
       function vaipraesquerda() {
         if (parseFloat(personagem.style.left) > 0 && vida > 0) {
-          personagem.style.left = parseFloat(personagem.style.left) - 0.5 + "vh";
+          personagem.style.left = parseFloat(personagem.style.left) - pvelocidade + "vh";
         }
         esquerda.addEventListener("mouseout",()=>{
           clearInterval(intervalesquerda)
@@ -89,7 +92,7 @@
       //FUNÇAO CIMA---------------------------------------------------------------------------------------
       function vaipracima() {
         if (parseFloat(personagem.style.top) > 0 && vida > 0) {
-          personagem.style.top = parseFloat(personagem.style.top) - 0.5 + "vh";
+          personagem.style.top = parseFloat(personagem.style.top) - pvelocidade + "vh";
         }
         cima.addEventListener("mouseout",()=>{
           clearInterval(intervalcima)
@@ -98,7 +101,7 @@
       //FUNÇAO BAIXO---------------------------------------------------------------------------------------
       function vaiprabaixo() {
         if (parseFloat(personagem.style.top) + parseFloat(personagem.style.width) < parseFloat(bordas.style.height) && vida > 0) {
-          personagem.style.top = parseFloat(personagem.style.top) + 0.5 + "vh";
+          personagem.style.top = parseFloat(personagem.style.top) + pvelocidade + "vh";
         }
         baixo.addEventListener("mouseout",()=>{
           clearInterval(intervalbaixo)
