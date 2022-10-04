@@ -1,36 +1,116 @@
+@font-face {
+  font-family: "fonte";
+  src: url("../fonts/DeterminationSansWeb.woff");
+}
+* {
+  font-family: "fonte", Arial;
+  user-select: none;
+}
 body {
   background-color: black;
 }
-#comecar{
+#botoesiniciar{
   position:absolute;
-  width:30vh;
+  margin-left:auto;
+  margin-right:auto;
   left:0;
+  right:0;
+  top:28vh;
+  display:flex;
+  justify-content:space-between;
+  width: 45vh;
+  line-height:3.5vh;
+  z-index: 7;
+}
+#dificil,#normal{
+  text-align:center;
+}
+
+.descricao{
+  color:white;
+  font-size: 2vh;
+}
+.botao{
+  width: 18vh;
+  height: 10vh;
+  background-color: white;
+  color: black;
+  border: none;
+  font-size: 3.5vh;
+}
+#recomecar{
+  position: absolute;
+  width: 26vh;
+  left: 0;
   right: 0;
   margin-left: auto;
   margin-right: auto;
-  top: 30vh;
-  height:10vh;
-  background-color:white;
-  color:black;
-  z-index:7;
-  box-shadow: 0.2vh 0.2vh 0.35vh white;
-  border:none;
-  font-size: 3vh;
-  user-select: none;
+  top: 40vh;
+  height: 9vh;
+  background-color: white;
+  color: black;
+  z-index: 7;
+  border: none;
+  font-size: 3.6vh;
 }
-#instrucao{
-  position:absolute;
-  left:0;
+#textofinal{
+  position: absolute;
+  width: 40vh;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  top: 20vh;
+  text-align:center;
+  color: white;
+  z-index: 7;
+  font-size: 3.8vh;
+}
+#instrucoes {
+  position: absolute;
+  left: 0;
   right: 0;
   margin-left: auto;
   margin-right: auto;
   width: 40vh;
-  text-align:center;
-  z-index:7;
-  top:48vh;
-  color:white;
-  font-size: 2.8vh;
-  user-select: none;
+  text-align: center;
+  z-index: 7;
+  top: 48vh;
+  color: white;
+  font-size: 3.4vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#guia {
+  width: 12vh;
+  cursor: pointer;
+}
+#pagina {
+  position: absolute;
+  width: 50vh;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  top: 10vh;
+  height: 30vh;
+  color: white;
+  z-index: 7;
+  line-height: 10vh;
+  font-size: 4vh;
+  display: none;
+  z-index: 2;
+}
+#azul {
+  color: rgb(0, 162, 232);
+}
+#laranja {
+  color: rgb(250, 187, 14);
+}
+
+#boasorte {
+  font-size: 2vh;
 }
 #bordaextra {
   margin: 0 auto;
@@ -53,6 +133,7 @@ body {
   position: absolute;
   background-color: red;
   z-index: 6;
+  display: none;
 }
 .controles {
   position: absolute;
@@ -60,9 +141,8 @@ body {
   width: 98vw;
   top: 70vh;
   text-align: center;
-  user-select: none;
 }
-button:not(#comecar) {
+[type="button"] {
   border-radius: 0;
   width: 14vh;
   padding: 1vh;
@@ -114,20 +194,18 @@ button:hover {
   left: 0;
   line-height: 6.5vh;
   z-index: 4;
-  user-select: none;
+  font-size: 5vh;
 }
 #vida {
   position: absolute;
   text-align: center;
-  font-size: 3.4vh;
   color: white;
   left: 3vh;
   bottom: 0;
 }
-#pontos {
+#atks {
   position: absolute;
   text-align: center;
-  font-size: 3.4vh;
   color: white;
   right: 4vh;
   bottom: 0;
@@ -139,7 +217,7 @@ button:hover {
   width: 3vh;
   height: 3vh;
   background-color: white;
-  animation: atk1 linear 1.2s;
+  animation: atk1 linear 1.8s;
   z-index: 2;
 }
 #projetil2 {
@@ -147,7 +225,7 @@ button:hover {
   width: 3vh;
   background-color: white;
   z-index: 2;
-  animation: atk2 linear 2.5s;
+  animation: atk2 linear 3s;
 }
 .animacaodano {
   animation: dano linear infinite 0.15s;
@@ -158,16 +236,16 @@ button:hover {
   width: 3vh;
   height: 3vh;
   background-color: white;
-  animation: atk1 linear 2s;
+  animation: atk1 linear 2.5s;
   z-index: 2;
 }
-#projetil4{
-  left:10%;
-  position:absolute;
-  width:3vh;
-  height:3vh;
+#projetil4 {
+  left: 10%;
+  position: absolute;
+  width: 3vh;
+  height: 3vh;
   background-color: white;
-  z-index: 2; 
+  z-index: 2;
 }
 .projetil5 {
   position: absolute;
@@ -177,7 +255,27 @@ button:hover {
   z-index: 5;
   animation: atk5-1 0.5s linear;
 }
-
+#projetil6 {
+  position: absolute;
+  height: 50%;
+  width: 2.5vh;
+  background-color: white;
+  z-index: 2;
+  animation: atk6 2.5s linear;
+}
+.projetil7{
+  position: absolute;
+  height:100%;
+  width:2.5vh;
+  animation: atk7 2s linear;
+  z-index: 2;
+}
+#projetillaranja{
+  background-color: rgb(250, 187, 14);
+}
+#projetilazul{
+  background-color: rgb(0, 162, 232);
+}
 @keyframes atk1 {
   from {
     top: 0;
@@ -194,36 +292,52 @@ button:hover {
     left: 0%;
   }
 }
-@keyframes atk4-1{
-  to{
-    left:95%;
+@keyframes atk4-1 {
+  to {
+    left: 95%;
   }
 }
-@keyframes atk4-2{
-  from{
-    top:5%;
+@keyframes atk4-2 {
+  from {
+    top: 5%;
   }
-  to{
+  to {
     top: 85%;
   }
 }
-@keyframes atk5-1{
+@keyframes atk5-1 {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes atk5-2 {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes atk6 {
+  from {
+    left: 0;
+  }
+  to {
+    left: 95%;
+  }
+}
+@keyframes atk7{
 from{
-  opacity: 0;
+  left: 95%;
 }
 to{
-  opacity: 1;
+  left:0%;
 }
 }
 
-@keyframes atk5-3{
-  from{
-    opacity:1;
-  }
-  to{
-    opacity:0;
-  }
-}
 @keyframes dano {
   0% {
     opacity: 0;
@@ -250,41 +364,80 @@ to{
     width: 43vh;
     height: 4.6vh;
     line-height: 4.6vh;
+    font-size:4vh;
   }
   #projetil1 {
     width: 2vh;
     height: 2vh;
   }
-  #projetil2{
-    width:2vh;
+  #projetil2 {
+    width: 2vh;
   }
-  #projetil3{
-    width:2vh;
-    height:2vh;
+  #projetil3 {
+    width: 2vh;
+    height: 2vh;
   }
-  #projetil4{
-    width:2vh;
-    height:2vh;
+  #projetil4 {
+    width: 2vh;
+    height: 2vh;
   }
-  .projetil5{
-    width:2vh;
-    height:2vh;
+  .projetil5 {
+    width: 2vh;
+    height: 2vh;
   }
-
+  #projetil6 {
+    width: 1.8vh;
+  }
+  .projetil7{
+    width: 2vh;
+  }
   #parededir {
     width: 2.4vh;
   }
-  button {
-    width: 16vh;
+  [type="button"] {
+    padding: 1.7vh;
     margin: 1.4vh;
+    width: 16vh;
   }
-  #comecar{
-    width:24vh;
-    height:9vh;
-    top:20vh;
+#botoesiniciar{
+  top:20vh;
+  width: 32vh
+}
+.botao{
+  width: 12vh;
+  height: 7vh;
+  font-size:2.5vh;
+}
+#recomecar{
+width:16vh;
+height:6vh;
+font-size:2.4vh;
+top: 30vh;
+}
+#textofinal{
+  width: 30vh;
+  top:15vh;
+  font-size: 2.6vh;
+}
+.descricao{
+font-size:1.7vh
+}
+  #instrucoes {
+    top: 34vh;
+    font-size: 2.4vh;
+    width: 30vh;
   }
-  #instrucao{
-    top:35vh;
-    font-size:2.4vh;
+  #guia {
+    width: 10vh;
+  }
+  #pagina {
+    width: 31vh;
+    font-size: 2.5vh;
+    line-height: 6vh;
+    height: 20vh;
+    top: 10vh;
+  }
+  #boasorte {
+    font-size: 1.4vh;
   }
 }
