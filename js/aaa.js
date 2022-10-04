@@ -49,7 +49,7 @@
       let menu = 0;
       let dificil = 0;
       let numeroataques = 0;
-      let intervalatk1 = 120, intervalatk2 = 1250, intervalatk3 = 550, intervalatk4 = 1500, intervalatk5 = 500
+      let intervalatk1 = 120, intervalatk2 = 1250, intervalatk3 = 570, intervalatk4 = 1500, intervalatk5 = 500
       let intervalatk6 = 1000, intervalatk7 = 900
       let espacoatk2 = 2.1
       let distatk3 = 3.2
@@ -647,7 +647,7 @@ async function delay(ml) {
                 vlcdatk5 = 1.4
                 anim6 = 1800
                 anim7 = 1200
-                distatk3 = 2.9
+                distatk3 = 3
                 espacoatk2 = 2
                 vlcdatk4 = 1.1
               }
