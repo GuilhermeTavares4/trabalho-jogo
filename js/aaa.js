@@ -30,7 +30,6 @@
       let i6 = 0;
       let i7 = 0;
       let lockcima = 0, lockbaixo = 0, lockesquerda = 0, lockdireita = 0;
-      let pvelocidade
       let colisao1, colisao2, colisao3, colisao4, colisao5,colisao6, colisao7;
       let pleft, ptop
       let podemexer = 0;
@@ -58,6 +57,7 @@
       let anim1 = 1800, anim2 = 3000, anim3 = 2500, anim4 = 8000, anim5 = 4000
       , anim6 = 2500, anim7 = 2000;
       let colisaolock = 0;
+      let intervalp;
       if (window.innerWidth >= 600){
       personagem.style.left = "26vh";
       personagem.style.top = "27vh"
@@ -69,8 +69,8 @@
       bordaextra.style.width = "62vh";
       bordaextra.style.height = "65vh";
       projetil1width = 3;
-      pvelocidade = 0.5
       vlcdatk5 = 1.2
+      intervalp = 5
       }
       else{
       personagem.style.left = "18vh";
@@ -83,8 +83,8 @@
       bordaextra.style.width = "43vh";
       bordaextra.style.height = "46vh";
       projetil1width = 2; 
-      pvelocidade = 0.4
       vlcdatk5 = 1;
+      intervalp = 6
       }
       let pwidth = parseFloat(getComputedStyle(personagem).width)
       let paredeesqwidth = parseFloat(getComputedStyle(paredeesq).width)
@@ -112,35 +112,35 @@
       //FUNÇAO DIREITA---------------------------------------------------------------------------------------
       function vaipradireita() {
         if (parseFloat(personagem.style.left) + parseFloat(personagem.style.width) < parseFloat(bordas.style.width) && podemexer == 1) {
-          personagem.style.left = parseFloat(personagem.style.left) + pvelocidade + "vh";
+          personagem.style.left = parseFloat(personagem.style.left) + 0.2 + "vh";
         }
         
       }
       //FUNÇAO ESQUERDA---------------------------------------------------------------------------------------
       function vaipraesquerda() {
         if (parseFloat(personagem.style.left) > 0 && podemexer == 1) {
-          personagem.style.left = parseFloat(personagem.style.left) - pvelocidade + "vh";
+          personagem.style.left = parseFloat(personagem.style.left) - 0.2 + "vh";
         }
 
       }
       //FUNÇAO CIMA---------------------------------------------------------------------------------------
       function vaipracima() {
         if (parseFloat(personagem.style.top) > 0 && podemexer == 1) {
-          personagem.style.top = parseFloat(personagem.style.top) - pvelocidade + "vh";
+          personagem.style.top = parseFloat(personagem.style.top) - 0.2 + "vh";
         }
         
       }
       //FUNÇAO BAIXO---------------------------------------------------------------------------------------
       function vaiprabaixo() {
         if (parseFloat(personagem.style.top) + parseFloat(personagem.style.width) < parseFloat(bordas.style.height) && podemexer == 1) {
-          personagem.style.top = parseFloat(personagem.style.top) + pvelocidade + "vh";
+          personagem.style.top = parseFloat(personagem.style.top) + 0.2 + "vh";
         }
         
       }
       //DIREITA---------------------------------------------------------------------------------------
       direita.addEventListener("mousedown", () => {
         if (lockdireita == 0){
-        intervaldireita = setInterval(vaipradireita, 12);
+        intervaldireita = setInterval(vaipradireita, intervalp);
         lockdireita = 1;
       }
       });
@@ -152,7 +152,7 @@
       });
       direita.addEventListener("touchstart", () => {
         if (lockdireita == 0){
-        intervaldireita = setInterval(vaipradireita, 12);
+        intervaldireita = setInterval(vaipradireita, intervalp);
         lockdireita = 1;
       }
       });
@@ -166,7 +166,7 @@
       //ESQUERDA---------------------------------------------------------------------------------------
       esquerda.addEventListener("mousedown", () => {
         if (lockesquerda == 0){
-        intervalesquerda = setInterval(vaipraesquerda, 12);
+        intervalesquerda = setInterval(vaipraesquerda, intervalp);
         lockesquerda = 1
       }
       });
@@ -178,7 +178,7 @@
       });
       esquerda.addEventListener("touchstart", () => {
         if (lockesquerda == 0){
-        intervalesquerda = setInterval(vaipraesquerda, 12);
+        intervalesquerda = setInterval(vaipraesquerda, intervalp);
         lockesquerda = 1
       }
       });
@@ -192,7 +192,7 @@
       //CIMA---------------------------------------------------------------------------------------
       cima.addEventListener("mousedown", () => {
         if (lockcima == 0){
-        intervalcima = setInterval(vaipracima, 12);
+        intervalcima = setInterval(vaipracima, intervalp);
         lockcima = 1;
       }
       });
@@ -204,7 +204,7 @@
       });
       cima.addEventListener("touchstart", () => {
         if (lockcima == 0){
-        intervalcima = setInterval(vaipracima, 12);
+        intervalcima = setInterval(vaipracima, intervalp);
         lockcima = 1;
       }
       });
@@ -218,7 +218,7 @@
       //BAIXO---------------------------------------------------------------------------------------
       baixo.addEventListener("mousedown", () => {
         if (lockbaixo == 0){
-        intervalbaixo = setInterval(vaiprabaixo, 12);
+        intervalbaixo = setInterval(vaiprabaixo, intervalp);
         lockbaixo = 1
       }
       });
@@ -230,7 +230,7 @@
       });
       baixo.addEventListener("touchstart", () => {
         if (lockbaixo == 0){
-        intervalbaixo = setInterval(vaiprabaixo, 12);
+        intervalbaixo = setInterval(vaiprabaixo, intervalp);
         lockbaixo = 1
       }
       });
@@ -244,25 +244,25 @@
       document.addEventListener("keydown",(e)=>{
         if(e.key == "a" || e.key == "A" || e.key == "ArrowLeft"){         
           if (lockesquerda == 0){
-        intervalesquerda = setInterval(vaipraesquerda, 12);
+        intervalesquerda = setInterval(vaipraesquerda, intervalp);
         lockesquerda = 1
       }
         }
       if (e.key == "d" || e.key == "D" || e.key == "ArrowRight"){
         if (lockdireita == 0){
-        intervaldireita = setInterval(vaipradireita, 12);
+        intervaldireita = setInterval(vaipradireita, intervalp);
         lockdireita = 1;
       }
       }
       if (e.key == "w" || e.key == "W" || e.key == "ArrowUp"){
         if (lockcima == 0){
-        intervalcima = setInterval(vaipracima, 12);
+        intervalcima = setInterval(vaipracima, intervalp);
         lockcima = 1;
       }
     }
     if (e.key == "s" || e.key == "S" || e.key == "ArrowDown"){
       if (lockbaixo == 0){
-        intervalbaixo = setInterval(vaiprabaixo, 12);
+        intervalbaixo = setInterval(vaiprabaixo, intervalp);
         lockbaixo = 1
       }
     }
