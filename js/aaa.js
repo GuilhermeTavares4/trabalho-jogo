@@ -627,12 +627,16 @@ async function delay(ml) {
         if (menu == 0){
           document.querySelector("#botoesiniciar").style.display = "none";
           document.querySelector("#pagina").style.display = "block"
+          document.querySelector("#controlesguia").style.opacity = 1;
+          document.querySelector("#leia").style.opacity = 0;
           menu = 1;
           return;
         }
         if (menu == 1){
           document.querySelector("#botoesiniciar").style.display = "flex";
           document.querySelector("#pagina").style.display = "none"
+          document.querySelector("#controlesguia").style.opacity= 0;
+          document.querySelector("#leia").style.opacity = 1;
           menu = 0;
           return;
         }
