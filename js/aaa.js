@@ -53,10 +53,11 @@
       let intervalatk6 = 1000, intervalatk7 = 900
       let espacoatk2 = 2.1
       let distatk3 = 3.2
-      let vlcdatk5 = 1.2
+      let vlcdatk5;
       let vlcdatk4 = 1.4
       let anim1 = 1800, anim2 = 3000, anim3 = 2500, anim4 = 8000, anim5 = 4000
       , anim6 = 2500, anim7 = 2000;
+      let colisaolock = 0;
       if (window.innerWidth >= 600){
       personagem.style.left = "26vh";
       personagem.style.top = "27vh"
@@ -69,6 +70,7 @@
       bordaextra.style.height = "65vh";
       projetil1width = 3;
       pvelocidade = 0.5
+      vlcdatk5 = 1.2
       }
       else{
       personagem.style.left = "18vh";
@@ -82,6 +84,7 @@
       bordaextra.style.height = "46vh";
       projetil1width = 2; 
       pvelocidade = 0.4
+      vlcdatk5 = 1;
       }
       let pwidth = parseFloat(getComputedStyle(personagem).width)
       let paredeesqwidth = parseFloat(getComputedStyle(paredeesq).width)
@@ -546,6 +549,7 @@ async function delay(ml) {
      }
      //FUNCAO COLISAOATK-----------------------------------------------------------------------------
      function colisao(atk){
+      if (colisaolock == 1){
         pegatopleft()
       for (let a = 0; a < atk.length; a++){
       projetilwidth = parseFloat(getComputedStyle(atk[a]).width)
@@ -589,6 +593,7 @@ async function delay(ml) {
           }                        
     }
   }
+}
 }   
       //FUNCAO VERIFICARECOMECO----------------------------------------------------------------------
       function verificarecomeco(){
@@ -599,11 +604,22 @@ async function delay(ml) {
       //FUNCAO VERIFICAVIDA----------------------------------------------------------------------
       function verificavida(){
         if (vida <= 0){
-          personagem.remove();
+          colisaolock = 0;
+          clearInterval(comecaatk)
+          clearInterval(intervalovida)
+          podemexer = 0;
+          personagem.removeAttribute("class")
+          personagem.style.opacity = 0.65
           ataques = []
           fimdejogo()
           clearInterval(intervalovida)
           clearInterval(comecaatk) 
+          let audio2 = new Audio('../sons/morte.mp3');
+          audio2.volume = 0.5;  
+				  audio2.play();           
+          setTimeout(()=>{
+          personagem.remove();
+          },1440)          
         }
       }
       //FUNCAO ABREMENU----------------------------------------------------------------------
@@ -634,7 +650,7 @@ async function delay(ml) {
             function comecarjogo(){
               if (dificil == 1){
                 intervalatk1 = 75
-                intervalatk2 = 950
+                intervalatk2 = 970
                 intervalatk3 = 370
                 intervalatk4 = 1250
                 intervalatk5 = 330
@@ -644,13 +660,19 @@ async function delay(ml) {
                 anim2 = 2300
                 anim3 = 2000
                 anim4 = 8000
-                vlcdatk5 = 1.4
                 anim6 = 1800
                 anim7 = 1200
                 distatk3 = 3
                 espacoatk2 = 2
                 vlcdatk4 = 1.1
+                if (window.innerWidth >= 600){
+                  vlcdatk5 = 1.4
+                }
+                else {
+                  vlcdatk5 = 1.2
+                }
               }
+              colisaolock = 1;
               document.querySelector("#vida").textContent = "VIDA: " + vida
               document.querySelector("#atks").textContent = "ATKs: " + ataques.length
               personagem.style.display = "block"
@@ -659,7 +681,7 @@ async function delay(ml) {
               document.querySelector("#instrucoes").remove()
               document.querySelector("#pagina").remove()
               jogo()
-              intervalovida = setInterval(verificavida,40)            
+              intervalovida = setInterval(verificavida,5)            
             }
                 //FUNCAO JOGO----------------------------------------------------------------------
                 function jogo(){
@@ -831,6 +853,6 @@ async function delay(ml) {
             })              
             setTimeout(()=>{
               document.body.appendChild(botao);
-            },2200)
-          },1500)
+            },1100)
+          },2500)
             }
