@@ -79,7 +79,7 @@
       personagem.style.height = "2vh";
       bordas.style.width = "38vh";
       bordas.style.height = "38vh";
-      paredeesq.style.width = "2.4vh";
+      paredeesq.style.width = "2.5vh";
       bordaextra.style.width = "43vh";
       bordaextra.style.height = "46vh";
       projetil1width = 2; 
