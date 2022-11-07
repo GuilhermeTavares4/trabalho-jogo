@@ -35,10 +35,9 @@
       let podemexer = 0;
       let comecaatk
       let invencibilidade = 0;
-      let ataques = [ataque1,ataque2,ataque3,ataque4,ataque5,ataque6,ataque7]
+      let ataques = [ataque5]
       let selecionaratk
       let acabou = 0;
-      let intervalovida
       let linha = 0;
       let ataqueanterior = "";
       let tempopcomecar = 1000
@@ -69,8 +68,8 @@
       bordaextra.style.width = "62vh";
       bordaextra.style.height = "65vh";
       projetil1width = 3;
-      vlcdatk5 = 1.2
-      intervalp = 5
+      vlcdatk5 = 1.5
+      intervalp = 4
       }
       else{
       personagem.style.left = "18vh";
@@ -83,7 +82,7 @@
       bordaextra.style.width = "43vh";
       bordaextra.style.height = "46vh";
       projetil1width = 2; 
-      vlcdatk5 = 1;
+      vlcdatk5 = 1.1;
       intervalp = 6
       }
       let pwidth = parseFloat(getComputedStyle(personagem).width)
@@ -112,28 +111,28 @@
       //FUNÇAO DIREITA---------------------------------------------------------------------------------------
       function vaipradireita() {
         if (parseFloat(personagem.style.left) + parseFloat(personagem.style.width) < parseFloat(bordas.style.width) && podemexer == 1) {
-          personagem.style.left = parseFloat(personagem.style.left) + 0.2 + "vh";
+          personagem.style.left = parseFloat(personagem.style.left) + 0.25 + "vh";
         }
         
       }
       //FUNÇAO ESQUERDA---------------------------------------------------------------------------------------
       function vaipraesquerda() {
         if (parseFloat(personagem.style.left) > 0 && podemexer == 1) {
-          personagem.style.left = parseFloat(personagem.style.left) - 0.2 + "vh";
+          personagem.style.left = parseFloat(personagem.style.left) - 0.25 + "vh";
         }
 
       }
       //FUNÇAO CIMA---------------------------------------------------------------------------------------
       function vaipracima() {
         if (parseFloat(personagem.style.top) > 0 && podemexer == 1) {
-          personagem.style.top = parseFloat(personagem.style.top) - 0.2 + "vh";
+          personagem.style.top = parseFloat(personagem.style.top) - 0.25 + "vh";
         }
         
       }
       //FUNÇAO BAIXO---------------------------------------------------------------------------------------
       function vaiprabaixo() {
         if (parseFloat(personagem.style.top) + parseFloat(personagem.style.width) < parseFloat(bordas.style.height) && podemexer == 1) {
-          personagem.style.top = parseFloat(personagem.style.top) + 0.2 + "vh";
+          personagem.style.top = parseFloat(personagem.style.top) + 0.25 + "vh";
         }
         
       }
@@ -560,6 +559,10 @@ async function delay(ml) {
 		      ptop < projetiltop + projetilheight - paredecimaheight && ptop + pwidth > projetiltop - paredecimaheight) {
             if (invencibilidade == 0 && atk[a].className != "projetil7"){
             tomoudano()
+            if (vida <= 0){
+              verificavida()
+              return
+            }
             invencibilidade = 1
             setTimeout(()=>{
               personagem.removeAttribute("class")
@@ -573,6 +576,10 @@ async function delay(ml) {
           (lockbaixo == 0 || (lockbaixo == 1 && parseFloat(personagem.style.top) >= parseFloat(bordas.style.height) - 5)))||
           (lockesquerda == 1 && lockdireita == 1) || (lockcima == 1 && lockbaixo == 1))){
             tomoudano()
+            if (vida <= 0){
+              verificavida()
+              return
+            }
             invencibilidade = 1
             setTimeout(()=>{
               personagem.removeAttribute("class")
@@ -585,6 +592,10 @@ async function delay(ml) {
           (lockcima == 1 && parseFloat(personagem.style.top) > 0) ||
           (lockbaixo == 1 && parseFloat(personagem.style.top) < parseFloat(bordas.style.height) - 5))){
             tomoudano()
+            if (vida <= 0){
+              verificavida()
+              return
+            }
             invencibilidade = 1
             setTimeout(()=>{
               personagem.removeAttribute("class")
@@ -603,25 +614,20 @@ async function delay(ml) {
       }
       //FUNCAO VERIFICAVIDA----------------------------------------------------------------------
       function verificavida(){
-        if (vida <= 0){
           colisaolock = 0;
           clearInterval(comecaatk)
-          clearInterval(intervalovida)
           podemexer = 0;
           personagem.removeAttribute("class")
           personagem.style.opacity = 0.65
           ataques = []
-          fimdejogo()
-          clearInterval(intervalovida)
-          clearInterval(comecaatk) 
+          fimdejogo() 
           let audio2 = new Audio('../sons/morte.mp3');
           audio2.volume = 0.5;  
 				  audio2.play();           
           setTimeout(()=>{
           personagem.remove();
-          },1440)          
+          },1440)
         }
-      }
       //FUNCAO ABREMENU----------------------------------------------------------------------
       function abremenu(){
         if (menu == 0){
@@ -670,10 +676,10 @@ async function delay(ml) {
                 espacoatk2 = 2
                 vlcdatk4 = 1.1
                 if (window.innerWidth >= 600){
-                  vlcdatk5 = 1.4
+                  vlcdatk5 = 1.85
                 }
                 else {
-                  vlcdatk5 = 1.2
+                  vlcdatk5 = 1.3
                 }
               }
               colisaolock = 1;
@@ -684,8 +690,7 @@ async function delay(ml) {
               document.querySelector("#botoesiniciar").remove()
               document.querySelector("#instrucoes").remove()
               document.querySelector("#pagina").remove()
-              jogo()
-              intervalovida = setInterval(verificavida,5)            
+              jogo()            
             }
                 //FUNCAO JOGO----------------------------------------------------------------------
                 function jogo(){
@@ -718,7 +723,6 @@ async function delay(ml) {
                     document.querySelector("#atks").textContent = "ATKs: " + ataques.length
                       if (ataques.length == 0){
                         clearInterval(comecaatk)
-                        clearInterval(intervalovida)
                         fimdejogo()
                       }                                     
                 },tempopcomecar)
