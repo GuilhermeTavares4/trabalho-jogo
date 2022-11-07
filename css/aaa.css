@@ -7,6 +7,10 @@
   flex-direction:column;
   justify-content:center;
   align-items:center;
+  transition:transform;
+}
+#divpralegenda:hover{
+  transform: scale(1.05);
 }
 * {
   font-family: "fonte", Arial;
