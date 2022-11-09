@@ -861,6 +861,6 @@ async function delay(ml) {
             })              
             setTimeout(()=>{
               document.body.appendChild(botao);
-            },1100)
-          },2500)
+            },950)
+          },2300)
             }
