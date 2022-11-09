@@ -5,7 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0" >
     <link rel="stylesheet" type="text/css" href="../css/aaa.css" >
+    <link rel="manifest" href="./manifest.json" >
     <title>jogo.</title>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+	       .then(function () {console.log('service worker registered');})
+	       .catch(function () {console.log('service worker failed'); });
+      }
+    </script>
   </head>
   <body>
     <div id="botoesiniciar">
