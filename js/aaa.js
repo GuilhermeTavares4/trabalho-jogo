@@ -35,7 +35,7 @@
       let podemexer = 0;
       let comecaatk
       let invencibilidade = 0;
-      let ataques = [ataque5]
+      let ataques = [ataque1,ataque2,ataque3,ataque4,ataque5,ataque6,ataque7]
       let selecionaratk
       let acabou = 0;
       let linha = 0;
