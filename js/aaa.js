@@ -673,7 +673,7 @@ async function delay(ml) {
                 anim6 = 1800
                 anim7 = 1200
                 distatk3 = 3
-                espacoatk2 = 2
+                espacoatk2 = 2.05
                 vlcdatk4 = 1.1
                 if (window.innerWidth >= 600){
                   vlcdatk5 = 1.85
