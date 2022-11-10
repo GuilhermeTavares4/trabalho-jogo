@@ -1,7 +1,7 @@
 {
-	"short_name": "aaa",
-	"name": "undertale só que claramente melhor",
-	"lang": "en",
+	"short_name": "Undertale só q melhor"
+	"name": "Undertale só que claramente melhor",
+	"lang": "pt-br",
 	"description": "descricao",
 	"start_url": "./index.html",
 	"background_color": "#000000",
