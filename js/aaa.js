@@ -31,13 +31,12 @@
       let i7 = 0;
       let lockcima = 0, lockbaixo = 0, lockesquerda = 0, lockdireita = 0;
       let colisao1, colisao2, colisao3, colisao4, colisao5,colisao6, colisao7;
-      let pleft, ptop
+      let pleft, ptop;
       let podemexer = 0;
       let comecaatk
       let invencibilidade = 0;
-      let ataques = [ataque1,ataque2,ataque3,ataque4,ataque5,ataque6,ataque7]
+      let ataques = ["ataquef1","ataquef2","ataquef3","ataquef4","ataquef5","ataquef6","ataquef7"]
       let selecionaratk
-      let acabou = 0;
       let linha = 0;
       let ataqueanterior = "";
       let tempopcomecar = 1000
@@ -45,50 +44,78 @@
       let projetilheight, projetiltop,projetilleft,projetilwidth;
       let viralaranja = 0, viraazul = 0;
       let menu = 0;
-      let dificil = 0;
-      let numeroataques = 0;
-      let intervalatk1 = 120, intervalatk2 = 1250, intervalatk3 = 570, intervalatk4 = 1500, intervalatk5 = 500
-      let intervalatk6 = 1000, intervalatk7 = 900
+      let dificil;
+      let intervalatk1, intervalatk2, intervalatk3, intervalatk4, intervalatk5, intervalatk6, intervalatk7
       let espacoatk2 = 2.1
       let distatk3 = 3.2
       let vlcdatk5;
       let vlcdatk4 = 1.4
-      let anim1 = 1800, anim2 = 3000, anim3 = 2500, anim4 = 8000, anim5 = 4000
-      , anim6 = 2500, anim7 = 2000;
+      let anim1, anim2, anim3, anim4 = 8000, anim5, anim6, anim7;
       let colisaolock = 0;
       let intervalp;
-      if (window.innerWidth >= 600){
-      personagem.style.left = "26vh";
-      personagem.style.top = "27vh"
-      personagem.style.width = "3vh";
-      personagem.style.height = "3vh";
-      bordas.style.width = "55vh";
-      bordas.style.height = "55vh";
-      paredeesq.style.width = "3.5vh";
-      bordaextra.style.width = "62vh";
-      bordaextra.style.height = "65vh";
-      projetil1width = 3;
-      vlcdatk5 = 1.5
-      intervalp = 4
+      let recomecar = document.querySelector("#recomecar"), textofinal = document.querySelector("#textofinal");
+      let jajogou = 0, continuou = 0;
+      let continuar;
+      //FUNCAO PARA RESIZE
+      function resize(){
+        if (window.innerWidth >= 600){
+          personagem.style.left = "26vh";
+          personagem.style.top = "26vh"
+          personagem.style.width = "3vh";
+          personagem.style.height = "3vh";
+          bordas.style.width = "55vh";
+          bordas.style.height = "55vh";
+          paredeesq.style.width = "3.5vh";
+          bordaextra.style.width = "62vh";
+          bordaextra.style.height = "65vh";
+          projetil1width = 3;
+          vlcdatk5 = 3
+          intervalp = 10
+          }
+          else{
+          personagem.style.left = "18vh";
+          personagem.style.top = "18vh"
+          personagem.style.width = "2vh";
+          personagem.style.height = "2vh";
+          bordas.style.width = "38vh";
+          bordas.style.height = "38vh";
+          paredeesq.style.width = "2.5vh";
+          bordaextra.style.width = "43vh";
+          bordaextra.style.height = "46vh";
+          projetil1width = 2; 
+          vlcdatk5 = 2.5;
+          intervalp = 16
+          }
+          window.addEventListener('resize',()=>{
+            resize()
+          })
       }
-      else{
-      personagem.style.left = "18vh";
-      personagem.style.top = "18vh"
-      personagem.style.width = "2vh";
-      personagem.style.height = "2vh";
-      bordas.style.width = "38vh";
-      bordas.style.height = "38vh";
-      paredeesq.style.width = "2.5vh";
-      bordaextra.style.width = "43vh";
-      bordaextra.style.height = "46vh";
-      projetil1width = 2; 
-      vlcdatk5 = 1.1;
-      intervalp = 6
-      }
-      let pwidth = parseFloat(getComputedStyle(personagem).width)
-      let paredeesqwidth = parseFloat(getComputedStyle(paredeesq).width)
-      let paredecimaheight = parseFloat(getComputedStyle(paredecima).height)
+      resize();
+      let pwidth = parseFloat(getComputedStyle(personagem).width);
+      let paredeesqwidth = parseFloat(getComputedStyle(paredeesq).width);
+      let paredecimaheight = parseFloat(getComputedStyle(paredecima).height);
 
+      //FUNCAO RECOMECA---------------------------------------------------------------------
+      function recomeca(){
+        ataqueanterior = "";
+        tempopcomecar = 1000
+        jajogou = 1;
+        vida = 100;
+        ataques = ["ataquef1","ataquef2","ataquef3","ataquef4","ataquef5","ataquef6","ataquef7"];
+        textofinal.style.display = "none";
+        recomecar.style.display = "none";
+        resize();
+        document.querySelector("#botoesiniciar").style.display = "flex";
+        document.querySelector("#instrucoes").style.display = "flex";
+        document.querySelector("#controlesguia").style.display = "block";
+        podemexer = 0;
+        personagem.style.opacity = 1;
+        personagem.style.display = "none";
+        document.querySelector("#vida").textContent = "VIDA: "
+        document.querySelector("#atks").textContent = "ATKs: "
+        
+
+      }
       esquerda.addEventListener("mouseout",()=>{
           clearInterval(intervalesquerda)
           lockesquerda = 0;
@@ -111,28 +138,28 @@
       //FUNÇAO DIREITA---------------------------------------------------------------------------------------
       function vaipradireita() {
         if (parseFloat(personagem.style.left) + parseFloat(personagem.style.width) < parseFloat(bordas.style.width) && podemexer == 1) {
-          personagem.style.left = parseFloat(personagem.style.left) + 0.25 + "vh";
+          personagem.style.left = parseFloat(personagem.style.left) + 0.4 + "vh";
         }
         
       }
       //FUNÇAO ESQUERDA---------------------------------------------------------------------------------------
       function vaipraesquerda() {
         if (parseFloat(personagem.style.left) > 0 && podemexer == 1) {
-          personagem.style.left = parseFloat(personagem.style.left) - 0.25 + "vh";
+          personagem.style.left = parseFloat(personagem.style.left) - 0.4 + "vh";
         }
 
       }
       //FUNÇAO CIMA---------------------------------------------------------------------------------------
       function vaipracima() {
         if (parseFloat(personagem.style.top) > 0 && podemexer == 1) {
-          personagem.style.top = parseFloat(personagem.style.top) - 0.25 + "vh";
+          personagem.style.top = parseFloat(personagem.style.top) - 0.4 + "vh";
         }
         
       }
       //FUNÇAO BAIXO---------------------------------------------------------------------------------------
       function vaiprabaixo() {
         if (parseFloat(personagem.style.top) + parseFloat(personagem.style.width) < parseFloat(bordas.style.height) && podemexer == 1) {
-          personagem.style.top = parseFloat(personagem.style.top) + 0.25 + "vh";
+          personagem.style.top = parseFloat(personagem.style.top) + 0.4 + "vh";
         }
         
       }
@@ -433,7 +460,7 @@ async function delay(ml) {
           parseFloat(getComputedStyle(atk5).top) <= parseFloat(getComputedStyle(bordaextra).height) - pwidth){                   
         atk5.style.left = parseFloat(getComputedStyle(atk5).left) + (distx / hipotenusa) * vlcdatk5 + "px"
         atk5.style.top = parseFloat(getComputedStyle(atk5).top) + (disty / hipotenusa) * vlcdatk5 + "px"
-        await delay(5)          
+        await delay(16)          
       }
     }  
     if (ladoataque5 == 1 ){
@@ -442,7 +469,7 @@ async function delay(ml) {
           parseFloat(getComputedStyle(atk5).top) <= parseFloat(getComputedStyle(bordaextra).height) - pwidth){                   
         atk5.style.left = parseFloat(getComputedStyle(atk5).left) + (distx / hipotenusa) * vlcdatk5 + "px"
         atk5.style.top = parseFloat(getComputedStyle(atk5).top) + (disty / hipotenusa) * vlcdatk5 + "px"
-        await delay(5)         
+        await delay(16)         
       }
     }
     if (ladoataque5 == 2 ){
@@ -451,7 +478,7 @@ async function delay(ml) {
           parseFloat(getComputedStyle(atk5).top) <= parseFloat(getComputedStyle(bordaextra).height) - pwidth){                   
         atk5.style.left = parseFloat(getComputedStyle(atk5).left) + (distx / hipotenusa) * vlcdatk5 + "px"
         atk5.style.top = parseFloat(getComputedStyle(atk5).top) + (disty / hipotenusa) * vlcdatk5 + "px"
-        await delay(5)          
+        await delay(16)          
       }
     }
     if (ladoataque5 == 3 ){
@@ -460,7 +487,7 @@ async function delay(ml) {
           parseFloat(getComputedStyle(atk5).left) <= parseFloat(getComputedStyle(bordaextra).width) - pwidth){                   
         atk5.style.left = parseFloat(getComputedStyle(atk5).left) + (distx / hipotenusa) * vlcdatk5 + "px"
         atk5.style.top = parseFloat(getComputedStyle(atk5).top) + (disty / hipotenusa) * vlcdatk5 + "px"
-        await delay(5)         
+        await delay(16)         
       }
     }      
             atk5.style.animation = "atk5-2 0.5s linear";
@@ -539,6 +566,7 @@ async function delay(ml) {
              audio.volume = 0.05       
 				    audio.play();
 						vida = vida - 10
+            localStorage.setItem("vida", vida)
             document.querySelector("#vida").textContent = "VIDA: " + vida; 
       }
      //FUNCAO PEGATOPLEFT DO PERSONAGEM-----------------------------------------------------------------------------
@@ -608,7 +636,7 @@ async function delay(ml) {
 }   
       //FUNCAO VERIFICARECOMECO----------------------------------------------------------------------
       function verificarecomeco(){
-        if (vida > 0 && numeroataques < 7){
+        if (vida > 0 && podemexer == 1){
               jogo()
              }
       }
@@ -625,7 +653,7 @@ async function delay(ml) {
           audio2.volume = 0.5;  
 				  audio2.play();           
           setTimeout(()=>{
-          personagem.remove();
+          personagem.style.display = "none";
           },1440)
         }
       //FUNCAO ABREMENU----------------------------------------------------------------------
@@ -634,6 +662,10 @@ async function delay(ml) {
           document.querySelector("#botoesiniciar").style.display = "none";
           document.querySelector("#pagina").style.display = "block"
           document.querySelector("#controlesguia").style.opacity = 1;
+          if (localStorage.getItem("vida") !== null || localStorage.getItem("ataques") !== null){
+            document.querySelector("#controlesguia").style.display = "block";
+            continuar.style.display = "none";
+          }
           document.querySelector("#leia").style.opacity = 0;
           menu = 1;
           return;
@@ -642,16 +674,47 @@ async function delay(ml) {
           document.querySelector("#botoesiniciar").style.display = "flex";
           document.querySelector("#pagina").style.display = "none"
           document.querySelector("#controlesguia").style.opacity= 0;
+          if (localStorage.getItem("vida") !== null || localStorage.getItem("ataques") !== null){
+            document.querySelector("#controlesguia").style.display = "none";
+            continuar.style.display = "block";
+          }
           document.querySelector("#leia").style.opacity = 1;
           menu = 0;
           return;
         }
       }
+            //Comandos para iniciar o jogo
+            if (localStorage.getItem("vida") !== null || localStorage.getItem("ataques") !== null){
+              document.querySelector("#controlesguia").style.display = "none";
+              continuar = document.createElement("button");
+              continuar.setAttribute("id","continuar")
+              continuar.setAttribute("class","botao")
+              continuar.textContent = "Continuar de onde parou"
+              document.querySelector("#instrucoes").appendChild(continuar);
+              document.querySelector("#divpralegenda").before(continuar);
+              continuar.addEventListener("click", ()=>{
+                if (localStorage.getItem("vida") !== null){
+                vida = localStorage.getItem("vida");
+              }
+              if (localStorage.getItem("ataques") !== null){
+                ataques = JSON.parse(localStorage.getItem("ataques"));
+              }
+                dificil = localStorage.getItem("dificuldade");
+                continuou = 1;
+                comecarjogo()
+              })
+             }
+
             botaodificil.addEventListener("click",()=>{
+              localStorage.clear();
               dificil = 1;
+              localStorage.setItem("dificuldade", 1);
               comecarjogo();
             });
             botaonormal.addEventListener("click",()=>{
+              localStorage.clear();
+              dificil = 0;
+              localStorage.setItem("dificuldade", 0);
               comecarjogo();
             });
             document.querySelector("#guia").addEventListener("click",abremenu);
@@ -659,27 +722,29 @@ async function delay(ml) {
             //FUNCAO COMECARJOGO----------------------------------------------------------------------
             function comecarjogo(){
               if (dificil == 1){
-                intervalatk1 = 75
-                intervalatk2 = 970
-                intervalatk3 = 370
-                intervalatk4 = 1250
-                intervalatk5 = 330
-                intervalatk6 = 560
-                intervalatk7 = 450
-                anim1 = 1200
-                anim2 = 2300
-                anim3 = 2000
-                anim4 = 8000
-                anim6 = 1800
-                anim7 = 1200
+                intervalatk1 = 75; intervalatk2 = 970; intervalatk3 = 370; intervalatk4 = 1250; intervalatk5 = 400; intervalatk6 = 560;
+                intervalatk7 = 450; anim1 = 1200; anim2 = 2300; anim3 = 2000; anim5 = 3400; anim6 = 1800; anim7 = 1200
                 distatk3 = 3
                 espacoatk2 = 2.05
                 vlcdatk4 = 1.1
                 if (window.innerWidth >= 600){
-                  vlcdatk5 = 1.85
+                  vlcdatk5 = 3.5
                 }
                 else {
-                  vlcdatk5 = 1.3
+                  vlcdatk5 = 3
+                }
+              }
+              if (dificil == 0){
+                intervalatk1 = 120; intervalatk2 = 1250; intervalatk3 = 570; intervalatk4 = 1500; intervalatk5 = 520; intervalatk6 = 1000;
+                intervalatk7 = 900; anim1 = 1800; anim2 = 3000; anim3 = 2500;anim5 = 4000; anim6 = 2500; anim7 = 2000
+                distatk3 = 3.2
+                espacoatk2 = 2.15
+                vlcdatk4 = 1.4
+                if (window.innerWidth >= 600){
+                  vlcdatk5 = 3
+                }
+                else {
+                  vlcdatk5 = 2.5
                 }
               }
               colisaolock = 1;
@@ -687,14 +752,17 @@ async function delay(ml) {
               document.querySelector("#atks").textContent = "ATKs: " + ataques.length
               personagem.style.display = "block"
               podemexer = 1;
-              document.querySelector("#botoesiniciar").remove()
-              document.querySelector("#instrucoes").remove()
-              document.querySelector("#pagina").remove()
+              document.querySelector("#botoesiniciar").style.display = "none"
+              document.querySelector("#instrucoes").style.display = "none"
               jogo()            
             }
                 //FUNCAO JOGO----------------------------------------------------------------------
                 function jogo(){
                 selecionaratk = Math.floor(Math.random() * (ataques.length))
+                if (continuou == 1){
+                  selecionaratk = localStorage.getItem("ultimoataque");
+                  continuou = 0;
+                }
                   if (ataqueanterior == "ataque1"){
                     tempopcomecar = anim1
                   }       
@@ -721,15 +789,18 @@ async function delay(ml) {
                   }            
                   setTimeout(()=>{
                     document.querySelector("#atks").textContent = "ATKs: " + ataques.length
+                    localStorage.setItem("ataques", JSON.stringify(ataques));
                       if (ataques.length == 0){
                         clearInterval(comecaatk)
+                        colisaolock = 0;
                         fimdejogo()
                       }                                     
                 },tempopcomecar)
                   
-                if (ataques[selecionaratk] == ataque1){
+                if (ataques[selecionaratk] == "ataquef1"){
                   ataqueanterior = "ataque1"
-                 colisao1 = setInterval(colisao,10,atk1)
+                  localStorage.setItem("ultimoataque",selecionaratk)
+                 colisao1 = setInterval(colisao,16,atk1)
                 setTimeout(()=>{
                 comecaatk = setInterval(ataque1,intervalatk1)
                  },tempopcomecar)
@@ -742,9 +813,10 @@ async function delay(ml) {
                   verificarecomeco()                  
                  },15000 + tempopcomecar)
                 }
-                if (ataques[selecionaratk] == ataque2){
+                if (ataques[selecionaratk] == "ataquef2"){
                   ataqueanterior = "ataque2"
-                 colisao2 = setInterval(colisao,10,atk2)
+                  localStorage.setItem("ultimoataque",selecionaratk)
+                 colisao2 = setInterval(colisao,16,atk2)
                 setTimeout(()=>{
                 comecaatk = setInterval(ataque2,intervalatk2)
                  },tempopcomecar)
@@ -757,9 +829,10 @@ async function delay(ml) {
                   verificarecomeco()
                  },18000 + tempopcomecar)
                 }
-                     if (ataques[selecionaratk] == ataque3){
+                     if (ataques[selecionaratk] == "ataquef3"){
                       ataqueanterior = "ataque3"
-                 colisao3 = setInterval(colisao,10,atk3)
+                      localStorage.setItem("ultimoataque",selecionaratk)
+                 colisao3 = setInterval(colisao,16,atk3)
                 setTimeout(()=>{
                 comecaatk = setInterval(ataque3,intervalatk3)
                  },tempopcomecar)
@@ -772,9 +845,10 @@ async function delay(ml) {
                   verificarecomeco()
                  },10000 + tempopcomecar)       
               }
-              if (ataques[selecionaratk] == ataque4) {
+              if (ataques[selecionaratk] == "ataquef4") {
                 ataqueanterior = "ataque4"
-                    colisao4 = setInterval(colisao, 10, atk4)
+                localStorage.setItem("ultimoataque",selecionaratk)
+                    colisao4 = setInterval(colisao, 16, atk4)
                     setTimeout(() => {
                       comecaatk = setInterval(ataque4, intervalatk4)
                     }, tempopcomecar)
@@ -787,9 +861,10 @@ async function delay(ml) {
                       verificarecomeco()
                     }, 18000 + tempopcomecar)
                   }
-                  if (ataques[selecionaratk] == ataque5) {
+                  if (ataques[selecionaratk] == "ataquef5") {
                     ataqueanterior = "ataque5"     
-                    colisao5 = setInterval(colisao, 10, atk5total = document.getElementsByClassName("projetil5"));         
+                    localStorage.setItem("ultimoataque",selecionaratk)
+                    colisao5 = setInterval(colisao, 16, atk5total = document.getElementsByClassName("projetil5"));         
                     setTimeout(() => {
                       comecaatk = setInterval(ataque5, intervalatk5)
                     }, tempopcomecar)
@@ -802,9 +877,10 @@ async function delay(ml) {
                       verificarecomeco()
                     }, 18000 + tempopcomecar)
                   }
-                  if (ataques[selecionaratk] == ataque6){
+                  if (ataques[selecionaratk] == "ataquef6"){
                     ataqueanterior = "ataque6"
-                   colisao6 = setInterval(colisao,10,atk6)
+                    localStorage.setItem("ultimoataque",selecionaratk)
+                   colisao6 = setInterval(colisao,16,atk6)
                   setTimeout(()=>{
                   comecaatk = setInterval(ataque6,intervalatk6)
                    },tempopcomecar)
@@ -818,9 +894,10 @@ async function delay(ml) {
                    },14000 + tempopcomecar)
                   }
 
-                  if (ataques[selecionaratk] == ataque7){
+                  if (ataques[selecionaratk] == "ataquef7"){
                     ataqueanterior = "ataque7"
-                   colisao7 = setInterval(colisao,10,atk7)
+                    localStorage.setItem("ultimoataque",selecionaratk)
+                   colisao7 = setInterval(colisao,16,atk7)
                   setTimeout(()=>{
                   comecaatk = setInterval(ataque7,intervalatk7)
                    },tempopcomecar)
@@ -839,28 +916,28 @@ async function delay(ml) {
               
               
               function fimdejogo(){
+                localStorage.clear();
+                if (document.querySelector("#continuar")){
+                continuar.remove();
+              }
                 setTimeout(()=>{
-                let textofinal = document.createElement("div")
-              textofinal.setAttribute("id","textofinal");
-              bordaextra.appendChild(textofinal)
                 if (vida <= 0){
                   textofinal.textContent = "Treine mais."
                  }
-
                  if (ataques.length == 0 && vida > 0 && dificil == 1){
                   textofinal.textContent = "Carai, joga muito."
                  }
                  if (ataques.length == 0 && vida > 0 && dificil == 0){
                   textofinal.textContent = "Mandou bem, mas já tentou jogar no difícil? ;)"
-                 }          
-              let botao = document.createElement("button");
-              botao.setAttribute("id","recomecar");
-              botao.textContent = "Jogar novamente"
-              botao.addEventListener("click",()=>{
-              window.location.reload();            
-            })              
+                 }
+                 textofinal.style.display = "block";          
+              if (jajogou == 0){
+              recomecar.addEventListener("click",()=>{
+              recomeca()      
+            })
+          }              
             setTimeout(()=>{
-              document.body.appendChild(botao);
-            },950)
-          },2300)
+              recomecar.style.display = "block"
+            },1000)
+          },1950)
             }
