@@ -84,7 +84,7 @@
           bordaextra.style.height = "46vh";
           projetil1width = 2; 
           vlcdatk5 = 2.5;
-          intervalp = 16
+          intervalp = 15
           }
           window.addEventListener('resize',()=>{
             resize()
