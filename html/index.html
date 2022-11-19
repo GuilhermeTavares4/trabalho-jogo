@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="../css/aaa.css" >
     <link rel="manifest" href="./manifest.json" >
     <title>jogo.</title>
-    <script>
+    <script> 
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js')
 	       .then(function () {console.log('service worker registered');})
@@ -16,26 +16,32 @@
     </script>
   </head>
   <body>
+    <div id="placarenome">
+    <input type="text" id="colocanome" placeholder="bota o nome aí :)">
+    <button id="limpar" class="botao">Limpar</button>
+    <button id="placar" class="botao">Placar</button>
+  </div>
     <div id="botoesiniciar">
-    <div id="dificil">
-      <button id="botaodificil" class="botao">Difícil</button><br>
-      <span class="descricao">(difícil)</span>
-    </div>
+      <div id="dificil">
+        <button id="botaodificil" class="botao">Difícil</button><br>
+        <span class="descricao">(difícil)</span>
+      </div>
       <div id="normal">
-      <button id="botaonormal" class="botao">Normal</button><br>
+        <button id="botaonormal" class="botao">Normal</button><br>
       <span class="descricao">(...não tão difícil)</span>
     </div>
   </div>
-    <div id="instrucoes">
-      <div id=controlesguia>(WASD ou setinhas)</div>
-      <div id="divpralegenda">
+  <div id="instrucoes">
+    <div id=controlesguia>(WASD ou setinhas)</div>
+    <div id="divpralegenda">
       <img id="guia" src="../imagens/livro.png" alt="guia">
-        <span class="descricao" id="leia">(Leia antes de jogar)</span>
+      <span class="descricao" id="leia">(Leia antes de jogar)</span>
     </div>
-    </div>
-    <div id="pagina">
-      ATKs = ataques restantes<br>
-      Projéteis <span id="azul">azuis</span>: Fique parado!<br>
+  </div>
+  <div id="nomesplacar"></div>
+  <div id="pagina">
+    ATKs = ataques restantes<br>
+    Projéteis <span id="azul">azuis</span>: Fique parado!<br>
     Projéteis <span id="laranja">laranjas</span>: Se mova!<br>
     Projéteis brancos: Desvie!<br>
     <span id="boasorte">Boa sorte.</span>
