@@ -922,7 +922,7 @@ document.querySelector("#limpar").addEventListener("click",()=>{
 function comecarjogo() {
   if (dificil == 1) {
     intervalatk1 = 75;
-    intervalatk2 = 970;
+    intervalatk2 = 990;
     intervalatk3 = 370;
     intervalatk4 = 1250;
     intervalatk5 = 400;
