@@ -86,6 +86,7 @@ let contadornome = 0;
 let textoplacar = "";
 let salvacontadornome = 0;
 let nomelock = 0;
+let podemexeranterior = 1;
 //FUNCAO PARA RESIZE
 function resize() {
   if (window.innerWidth >= 600) {
@@ -390,7 +391,7 @@ function ataque1() {
     }
   }
   bordaextra.appendChild(atk1[i1]);
-  removeprojetil(atk1, anim1);
+  removeprojetil(atk1, anim1 - 5);
   i1++;
 }
 //FUNCAO ATAQUE2----------------------------------------------------------------------
@@ -424,7 +425,7 @@ function ataque2() {
     parseFloat(atk2[i2].style.top) +
     "px";
   bordaextra.appendChild(atk2[i2]);
-  removeprojetil(atk2, anim2);
+  removeprojetil(atk2, anim2 - 5);
   i2++;
 }
 //FUNCAO ATAQUE3----------------------------------------------------------------------
@@ -452,7 +453,7 @@ function ataque3() {
     atk3[i3].style.left = posicaopjt3 + "px";
     posicaopjt3 += pwidth * distatk3;
     bordaextra.appendChild(atk3[i3]);
-    removeprojetil(atk3, anim3);
+    removeprojetil(atk3, anim3 - 5);
     i3++;
   }
 }
@@ -476,7 +477,7 @@ function ataque4() {
     "s";
   atk4[i4].style.left = Math.random() * paredeesqwidth * 2 + "px";
   bordaextra.appendChild(atk4[i4]);
-  removeprojetil(atk4, 8000);
+  removeprojetil(atk4, 7995);
   i4++;
 }
 
@@ -631,7 +632,7 @@ async function ataque6() {
   atk6[i6].style.top = "50%";
   atk6[i6].style.animationDirection = "reverse";
   bordaextra.appendChild(atk6[i6]);
-  removeprojetil(atk6, anim6);
+  removeprojetil(atk6, anim6 - 5);
   i6++;
 }
 //FUNCAO ATAQUE7----------------------------------------------------------------------
@@ -659,7 +660,7 @@ function ataque7() {
     atk7[i7].style.animationDuration = "1.2s";
   }
   bordaextra.appendChild(atk7[i7]);
-  removeprojetil(atk7, anim7);
+  removeprojetil(atk7, anim7 - 5);
   i7++;
 }
 //FUNCAO REMOVEPROJETIL----------------------------------------------------------------------
@@ -777,17 +778,13 @@ function colisao(atk) {
     }
   }
 }
-//FUNCAO VERIFICARECOMECO----------------------------------------------------------------------
-function verificarecomeco() {
-  if (vida > 0 && podemexer == 1) {
-    jogo();
-  }
-}
+
 //FUNCAO VERIFICAVIDA----------------------------------------------------------------------
 function verificavida() {
   colisaolock = 0;
   clearInterval(comecaatk);
   podemexer = 0;
+  podemexeranterior = 0;
   personagem.removeAttribute("class");
   personagem.style.opacity = 0.65;
   ataques = [];
@@ -856,6 +853,14 @@ function abreplacar() {
     return;
   }
 }
+  //FUNCAO REMOVECONTINUAR----------------------------------------------------------------------
+  function removecontinuar(){
+    localStorage.removeItem("vida");
+    localStorage.removeItem("ataques");
+    localStorage.removeItem("dificuldade");
+    localStorage.removeItem("ultimoataque")
+  }
+
 //Comandos para iniciar o jogo
 if (
   localStorage.getItem("vida") !== null ||
@@ -876,25 +881,20 @@ if (
       ataques = JSON.parse(localStorage.getItem("ataques"));
     }
     dificil = localStorage.getItem("dificuldade");
+    colocanome.value = localStorage.getItem("nomeanterior");
     continuou = 1;
     comecarjogo();
   });
 }
 
 botaodificil.addEventListener("click", () => {
-  localStorage.removeItem("vida");
-  localStorage.removeItem("ataques");
-  localStorage.removeItem("dificuldade");
-  localStorage.removeItem("ultimoataque")
+  removecontinuar()
   dificil = 1;
   localStorage.setItem("dificuldade", 1);
   comecarjogo();
 });
 botaonormal.addEventListener("click", () => {
-  localStorage.removeItem("vida");
-  localStorage.removeItem("ataques");
-  localStorage.removeItem("dificuldade");
-  localStorage.removeItem("ultimoataque")
+  removecontinuar()
   dificil = 0;
   localStorage.setItem("dificuldade", 0);
   comecarjogo();
@@ -931,7 +931,7 @@ function comecarjogo() {
     anim1 = 1200;
     anim2 = 2300;
     anim3 = 2000;
-    anim5 = 3400;
+    anim5 = 3600;
     anim6 = 1800;
     anim7 = 1200;
     distatk3 = 3;
@@ -954,7 +954,7 @@ function comecarjogo() {
     anim1 = 1800;
     anim2 = 3000;
     anim3 = 2500;
-    anim5 = 4000;
+    anim5 = 4200;
     anim6 = 2500;
     anim7 = 2000;
     distatk3 = 3.2;
@@ -967,6 +967,7 @@ function comecarjogo() {
     }
   }
   colisaolock = 1;
+  localStorage.setItem("nomeanterior",colocanome.value);
   document.querySelector("#vida").textContent = "VIDA: " + vida;
   document.querySelector("#atks").textContent = "ATKs: " + ataques.length;
   personagem.style.display = "block";
@@ -976,6 +977,21 @@ function comecarjogo() {
   document.querySelector("#placarenome").style.display = "none";
   jogo();
 }
+  //FUNCAO PARAATAQUE----------------------------------------------------------------------
+  function paraataque(tipocolisao,anim){
+    if(podemexer ==  1 && podemexeranterior == 1){
+      clearInterval(comecaatk);
+      ataques.splice(selecionaratk, 1);
+      console.log("cu roxo")
+      setTimeout(() => {
+        clearInterval(tipocolisao);
+      }, anim);
+      jogo()
+    }
+    if (podemexeranterior == 0){
+      podemexeranterior = 1;
+    }
+  }
 //FUNCAO JOGO----------------------------------------------------------------------
 function jogo() {
   selecionaratk = Math.floor(Math.random() * ataques.length);
@@ -983,29 +999,28 @@ function jogo() {
     selecionaratk = localStorage.getItem("ultimoataque");
     continuou = 0;
   }
-  if (ataqueanterior == "ataque1") {
+  switch (ataqueanterior){
+    case "ataque1":
     tempopcomecar = anim1;
-  }
-  if (ataqueanterior == "ataque2") {
+    break;
+    case "ataque2":
     tempopcomecar = anim2;
-  }
-
-  if (ataqueanterior == "ataque3") {
+    break;
+    case "ataque3":
     tempopcomecar = anim3;
-  }
-
-  if (ataqueanterior == "ataque4") {
+    break;
+    case "ataque4":
     tempopcomecar = anim4;
-  }
-
-  if (ataqueanterior == "ataque5") {
+    break;
+    case "ataque5":
     tempopcomecar = anim5;
-  }
-  if (ataqueanterior == "ataque6") {
+    break;
+    case "ataque6":
     tempopcomecar = anim6 + 550;
-  }
-  if (ataqueanterior == "ataque7") {
+    break;
+    case "ataque7":
     tempopcomecar = anim7;
+    break;
   }
   setTimeout(() => {
     document.querySelector("#atks").textContent = "ATKs: " + ataques.length;
@@ -1025,12 +1040,7 @@ function jogo() {
       comecaatk = setInterval(ataque1, intervalatk1);
     }, tempopcomecar);
     setTimeout(() => {
-      clearInterval(comecaatk);
-      ataques.splice(selecionaratk, 1);
-      setTimeout(() => {
-        clearInterval(colisao1);
-      }, anim1);
-      verificarecomeco();
+      paraataque(colisao1, anim1)
     }, 15000 + tempopcomecar);
   }
   if (ataques[selecionaratk] == "ataquef2") {
@@ -1041,12 +1051,7 @@ function jogo() {
       comecaatk = setInterval(ataque2, intervalatk2);
     }, tempopcomecar);
     setTimeout(() => {
-      clearInterval(comecaatk);
-      ataques.splice(selecionaratk, 1);
-      setTimeout(() => {
-        clearInterval(colisao2);
-      }, anim2);
-      verificarecomeco();
+      paraataque(colisao2, anim2)
     }, 18000 + tempopcomecar);
   }
   if (ataques[selecionaratk] == "ataquef3") {
@@ -1057,12 +1062,7 @@ function jogo() {
       comecaatk = setInterval(ataque3, intervalatk3);
     }, tempopcomecar);
     setTimeout(() => {
-      clearInterval(comecaatk);
-      ataques.splice(selecionaratk, 1);
-      setTimeout(() => {
-        clearInterval(colisao3);
-      }, anim3);
-      verificarecomeco();
+      paraataque(colisao3, anim3)
     }, 10000 + tempopcomecar);
   }
   if (ataques[selecionaratk] == "ataquef4") {
@@ -1073,12 +1073,7 @@ function jogo() {
       comecaatk = setInterval(ataque4, intervalatk4);
     }, tempopcomecar);
     setTimeout(() => {
-      clearInterval(comecaatk);
-      ataques.splice(selecionaratk, 1);
-      setTimeout(() => {
-        clearInterval(colisao4);
-      }, anim4);
-      verificarecomeco();
+      paraataque(colisao4, anim4)
     }, 18000 + tempopcomecar);
   }
   if (ataques[selecionaratk] == "ataquef5") {
@@ -1093,12 +1088,7 @@ function jogo() {
       comecaatk = setInterval(ataque5, intervalatk5);
     }, tempopcomecar);
     setTimeout(() => {
-      clearInterval(comecaatk);
-      ataques.splice(selecionaratk, 1);
-      setTimeout(() => {
-        clearInterval(colisao5);
-      }, anim5);
-      verificarecomeco();
+      paraataque(colisao5, anim5)
     }, 18000 + tempopcomecar);
   }
   if (ataques[selecionaratk] == "ataquef6") {
@@ -1109,12 +1099,7 @@ function jogo() {
       comecaatk = setInterval(ataque6, intervalatk6);
     }, tempopcomecar);
     setTimeout(() => {
-      clearInterval(comecaatk);
-      ataques.splice(selecionaratk, 1);
-      setTimeout(() => {
-        clearInterval(colisao6 + 550);
-      }, anim6);
-      verificarecomeco();
+      paraataque(colisao6, anim6 + 550)
     }, 14000 + tempopcomecar);
   }
 
@@ -1126,21 +1111,15 @@ function jogo() {
       comecaatk = setInterval(ataque7, intervalatk7);
     }, tempopcomecar);
     setTimeout(() => {
-      clearInterval(comecaatk);
-      ataques.splice(selecionaratk, 1);
-      setTimeout(() => {
-        clearInterval(colisao7);
-      }, anim7);
-      verificarecomeco();
+      paraataque(colisao7, anim7)
     }, 11000 + tempopcomecar);
   }
 }
 //FUNCAO FIMDEJOGO----------------------------------------------------------------------
 function fimdejogo() {
-  localStorage.removeItem("vida");
-  localStorage.removeItem("ataques");
-  localStorage.removeItem("dificuldade");
-  localStorage.removeItem("ultimoataque");
+  clearInterval(colisao1);clearInterval(colisao2);clearInterval(colisao3);clearInterval(colisao4);clearInterval(colisao5);
+  clearInterval(colisao6);clearInterval(colisao7);
+  removecontinuar();
   if (localStorage.getItem("contadornome") !== null){
     for (let i = 0; i <= contadornome; i++){
       if (nomes[i] == colocanome.value){
@@ -1155,6 +1134,7 @@ function fimdejogo() {
   zeroudificil[contadornome] = "Não";
   zerounormal[contadornome] = "Não";
 }
+
   if (ataques.length == 0 && vida > 0 && dificil == 0) {
     zerounormal[contadornome] = "Sim"
     textofinal.textContent = "Mandou bem, mas já tentou jogar no difícil? ;)";
