@@ -41,7 +41,7 @@ let pleft, ptop;
 let podemexer = 0;
 let comecaatk;
 let invencibilidade = 0;
-let ataques = ["ataquef1","ataquef2","ataquef3","ataquef4","ataquef5","ataquef6","ataquef7",];
+let ataques = ["ataquef1","ataquef2"];
 let selecionaratk;
 let linha = 0;
 let ataqueanterior = "";
@@ -87,6 +87,7 @@ let textoplacar = "";
 let salvacontadornome = 0;
 let nomelock = 0;
 let podemexeranterior = 1;
+let vX = 0, vY = 0, vReal;
 //FUNCAO PARA RESIZE
 function resize() {
   if (window.innerWidth >= 600) {
@@ -181,19 +182,35 @@ function vaipradireita() {
       parseFloat(bordas.style.width) &&
     podemexer == 1
   ) {
-    personagem.style.left = parseFloat(personagem.style.left) + 0.4 + "vh";
+    vX = 1;
+    vReal = Math.sqrt(-4 * (vX + vY) * -0.16) / (2 * (vX + vY));   
+    personagem.style.left = parseFloat(personagem.style.left) + vReal + "vh";
+  }
+  if (parseFloat(personagem.style.left) + 
+  parseFloat(personagem.style.width) > parseFloat(bordas.style.width)){
+    personagem.style.left = parseFloat(bordas.style.width) - parseFloat(personagem.style.width) + "vh";
   }
 }
 //FUNÇAO ESQUERDA---------------------------------------------------------------------------------------
 function vaipraesquerda() {
   if (parseFloat(personagem.style.left) > 0 && podemexer == 1) {
-    personagem.style.left = parseFloat(personagem.style.left) - 0.4 + "vh";
+    vX = 1;
+    vReal = Math.sqrt(-4 * (vX + vY) * -0.16) / (2 * (vX + vY));
+    personagem.style.left = parseFloat(personagem.style.left) - vReal + "vh";
+  }
+  if (parseFloat(personagem.style.left) < 0){
+    personagem.style.left = parseFloat(personagem.style.left) - parseFloat(personagem.style.left) + "vh";
   }
 }
 //FUNÇAO CIMA---------------------------------------------------------------------------------------
 function vaipracima() {
   if (parseFloat(personagem.style.top) > 0 && podemexer == 1) {
-    personagem.style.top = parseFloat(personagem.style.top) - 0.4 + "vh";
+    vY = 1;
+    vReal = Math.sqrt(-4 * (vX + vY) * -0.16) / (2 * (vX + vY));
+    personagem.style.top = parseFloat(personagem.style.top) - vReal + "vh";
+  }
+  if (parseFloat(personagem.style.top) < 0){
+    personagem.style.top = parseFloat(personagem.style.top) - parseFloat(personagem.style.top) + "vh";
   }
 }
 //FUNÇAO BAIXO---------------------------------------------------------------------------------------
@@ -203,7 +220,13 @@ function vaiprabaixo() {
       parseFloat(bordas.style.height) &&
     podemexer == 1
   ) {
-    personagem.style.top = parseFloat(personagem.style.top) + 0.4 + "vh";
+    vY = 1;
+    vReal = Math.sqrt(-4 * (vX + vY) * -0.16) / (2 * (vX + vY));
+    personagem.style.top = parseFloat(personagem.style.top) + vReal + "vh";
+  }
+  if (parseFloat(personagem.style.top) + 
+  parseFloat(personagem.style.height) > parseFloat(bordas.style.height)){
+    personagem.style.top = parseFloat(bordas.style.height) - parseFloat(personagem.style.height) + "vh";
   }
 }
 //DIREITA---------------------------------------------------------------------------------------
@@ -217,6 +240,7 @@ direita.addEventListener("mouseup", () => {
   if (lockdireita == 1) {
     clearInterval(intervaldireita);
     lockdireita = 0;
+    vX = 0;
   }
 });
 direita.addEventListener("touchstart", () => {
@@ -229,6 +253,7 @@ direita.addEventListener("touchend", () => {
   if (lockdireita == 1) {
     clearInterval(intervaldireita);
     lockdireita = 0;
+    vX = 0;
   }
 });
 
@@ -243,6 +268,7 @@ esquerda.addEventListener("mouseup", () => {
   if (lockesquerda == 1) {
     clearInterval(intervalesquerda);
     lockesquerda = 0;
+    vX = 0;
   }
 });
 esquerda.addEventListener("touchstart", () => {
@@ -255,6 +281,7 @@ esquerda.addEventListener("touchend", () => {
   if (lockesquerda == 1) {
     clearInterval(intervalesquerda);
     lockesquerda = 0;
+    vX = 0;
   }
 });
 
@@ -268,6 +295,7 @@ cima.addEventListener("mousedown", () => {
 cima.addEventListener("mouseup", () => {
   if (lockcima == 1) {
     clearInterval(intervalcima);
+    vY = 0;
     lockcima = 0;
   }
 });
@@ -280,6 +308,7 @@ cima.addEventListener("touchstart", () => {
 cima.addEventListener("touchend", () => {
   if (lockcima == 1) {
     clearInterval(intervalcima);
+    vY = 0;
     lockcima = 0;
   }
 });
@@ -294,6 +323,7 @@ baixo.addEventListener("mousedown", () => {
 baixo.addEventListener("mouseup", () => {
   if (lockbaixo == 1) {
     clearInterval(intervalbaixo);
+    vY = 0;
     lockbaixo = 0;
   }
 });
@@ -306,6 +336,7 @@ baixo.addEventListener("touchstart", () => {
 baixo.addEventListener("touchend", () => {
   if (lockbaixo == 1) {
     clearInterval(intervalbaixo);
+    vY = 0;
     lockbaixo = 0;
   }
 });
@@ -342,24 +373,28 @@ document.addEventListener("keyup", (e) => {
     if (lockesquerda == 1) {
       clearInterval(intervalesquerda);
       lockesquerda = 0;
+      vX = 0;
     }
   }
   if (e.key == "d" || e.key == "D" || e.key == "ArrowRight") {
     if (lockdireita == 1) {
       clearInterval(intervaldireita);
       lockdireita = 0;
+      vX = 0;
     }
   }
   if (e.key == "w" || e.key == "W" || e.key == "ArrowUp") {
     if (lockcima == 1) {
       clearInterval(intervalcima);
       lockcima = 0;
+      vY = 0;
     }
   }
   if (e.key == "s" || e.key == "S" || e.key == "ArrowDown") {
     if (lockbaixo == 1) {
       clearInterval(intervalbaixo);
       lockbaixo = 0;
+      vY = 0;
     }
   }
 });
@@ -399,7 +434,7 @@ function ataque2() {
   atk2[i2] = document.createElement("div");
   atk2[i2].setAttribute("id", "projetil2");
   if (dificil == 1) {
-    atk2[i2].style.animationDuration = "2.3s";
+    atk2[i2].style.animationDuration = "2.4s";
   }
   atk2[i2].style.height =
     Math.random() *
@@ -409,12 +444,12 @@ function ataque2() {
     parseFloat(getComputedStyle(paredecima).height) * 1.05 +
     "px";
   bordaextra.appendChild(atk2[i2]);
-  removeprojetil(atk2, anim2);
+  removeprojetil(atk2, anim2 - 5);
   i2++;
   atk2[i2] = document.createElement("div");
   atk2[i2].setAttribute("id", "projetil2");
   if (dificil == 1) {
-    atk2[i2].style.animationDuration = "2.3s";
+    atk2[i2].style.animationDuration = "2.4s";
   }
   atk2[i2].style.top =
     parseFloat(atk2[i2 - 1].style.height) +
@@ -466,7 +501,7 @@ function ataque4() {
     "atk4-1 linear 7.5s, atk4-2 linear infinite alternate " + duracaoanim + "s";
   atk4[i4].style.left = Math.random() * paredeesqwidth * 2 + "px";
   bordaextra.appendChild(atk4[i4]);
-  removeprojetil(atk4, 7500);
+  removeprojetil(atk4, 7495);
   i4++;
   duracaoanim = Math.random() + 1;
   atk4[i4] = document.createElement("div");
@@ -621,7 +656,7 @@ async function ataque6() {
     atk6[i6].style.animationDuration = "1.8s";
   }
   bordaextra.appendChild(atk6[i6]);
-  removeprojetil(atk6, anim6);
+  removeprojetil(atk6, anim6 - 5);
   i6++;
   await delay(550);
   atk6[i6] = document.createElement("div");
@@ -921,15 +956,15 @@ document.querySelector("#limpar").addEventListener("click",()=>{
 //FUNCAO COMECARJOGO----------------------------------------------------------------------
 function comecarjogo() {
   if (dificil == 1) {
-    intervalatk1 = 75;
-    intervalatk2 = 990;
+    intervalatk1 = 80;
+    intervalatk2 = 1040;
     intervalatk3 = 370;
     intervalatk4 = 1250;
     intervalatk5 = 400;
     intervalatk6 = 560;
     intervalatk7 = 450;
     anim1 = 1200;
-    anim2 = 2300;
+    anim2 = 2400;
     anim3 = 2000;
     anim5 = 3600;
     anim6 = 1800;
