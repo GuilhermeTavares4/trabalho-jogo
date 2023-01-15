@@ -982,7 +982,6 @@ function comecarjogo() {
     if(podemexer ==  1 && podemexeranterior == 1){
       clearInterval(comecaatk);
       ataques.splice(selecionaratk, 1);
-      console.log("cu roxo")
       setTimeout(() => {
         clearInterval(tipocolisao);
       }, anim);
