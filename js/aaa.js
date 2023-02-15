@@ -41,7 +41,7 @@ let pleft, ptop;
 let podemexer = 0;
 let comecaatk;
 let invencibilidade = 0;
-let ataques = ["ataquef1","ataquef2"];
+let ataques = ["ataquef1","ataquef2","ataquef3","ataquef4","ataquef5","ataquef6","ataquef7"];
 let selecionaratk;
 let linha = 0;
 let ataqueanterior = "";
