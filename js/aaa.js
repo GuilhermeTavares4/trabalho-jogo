@@ -1212,6 +1212,6 @@ function fimdejogo() {
     }
     setTimeout(() => {
       recomecar.style.display = "block";
-    }, 1000);
+    }, 800);
   }, 1950);
 }
