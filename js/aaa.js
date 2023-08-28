@@ -426,7 +426,7 @@ function ataque1() {
     }
   }
   bordaextra.appendChild(atk1[i1]);
-  removeprojetil(atk1, anim1 - 5);
+  removeprojetil(atk1, anim1 - 10);
   i1++;
 }
 //FUNCAO ATAQUE2----------------------------------------------------------------------
@@ -444,7 +444,7 @@ function ataque2() {
     parseFloat(getComputedStyle(paredecima).height) * 1.05 +
     "px";
   bordaextra.appendChild(atk2[i2]);
-  removeprojetil(atk2, anim2 - 5);
+  removeprojetil(atk2, anim2 - 10);
   i2++;
   atk2[i2] = document.createElement("div");
   atk2[i2].setAttribute("id", "projetil2");
@@ -460,7 +460,7 @@ function ataque2() {
     parseFloat(atk2[i2].style.top) +
     "px";
   bordaextra.appendChild(atk2[i2]);
-  removeprojetil(atk2, anim2 - 5);
+  removeprojetil(atk2, anim2 - 10);
   i2++;
 }
 //FUNCAO ATAQUE3----------------------------------------------------------------------
@@ -488,7 +488,7 @@ function ataque3() {
     atk3[i3].style.left = posicaopjt3 + "px";
     posicaopjt3 += pwidth * distatk3;
     bordaextra.appendChild(atk3[i3]);
-    removeprojetil(atk3, anim3 - 5);
+    removeprojetil(atk3, anim3 - 10);
     i3++;
   }
 }
@@ -501,7 +501,7 @@ function ataque4() {
     "atk4-1 linear 7.5s, atk4-2 linear infinite alternate " + duracaoanim + "s";
   atk4[i4].style.left = Math.random() * paredeesqwidth * 2 + "px";
   bordaextra.appendChild(atk4[i4]);
-  removeprojetil(atk4, 7495);
+  removeprojetil(atk4, 7490);
   i4++;
   duracaoanim = Math.random() + 1;
   atk4[i4] = document.createElement("div");
@@ -512,7 +512,7 @@ function ataque4() {
     "s";
   atk4[i4].style.left = Math.random() * paredeesqwidth * 2 + "px";
   bordaextra.appendChild(atk4[i4]);
-  removeprojetil(atk4, 7995);
+  removeprojetil(atk4, 7990);
   i4++;
 }
 
@@ -645,7 +645,7 @@ async function ataque5() {
   atk5.style.animation = "atk5-2 0.5s linear";
   setTimeout(() => {
     atk5.remove();
-  }, 500);
+  }, 490);
 }
 
 //FUNCAO ATAQUE6----------------------------------------------------------------------
@@ -656,7 +656,7 @@ async function ataque6() {
     atk6[i6].style.animationDuration = "1.8s";
   }
   bordaextra.appendChild(atk6[i6]);
-  removeprojetil(atk6, anim6 - 5);
+  removeprojetil(atk6, anim6 - 10);
   i6++;
   await delay(550);
   atk6[i6] = document.createElement("div");
@@ -667,7 +667,7 @@ async function ataque6() {
   atk6[i6].style.top = "50%";
   atk6[i6].style.animationDirection = "reverse";
   bordaextra.appendChild(atk6[i6]);
-  removeprojetil(atk6, anim6 - 5);
+  removeprojetil(atk6, anim6 - 10);
   i6++;
 }
 //FUNCAO ATAQUE7----------------------------------------------------------------------
@@ -695,7 +695,7 @@ function ataque7() {
     atk7[i7].style.animationDuration = "1.2s";
   }
   bordaextra.appendChild(atk7[i7]);
-  removeprojetil(atk7, anim7 - 5);
+  removeprojetil(atk7, anim7 - 10);
   i7++;
 }
 //FUNCAO REMOVEPROJETIL----------------------------------------------------------------------
